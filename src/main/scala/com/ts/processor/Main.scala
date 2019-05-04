@@ -11,7 +11,7 @@ import scala.util.Random
 object Main extends App{
   implicit val system: ActorSystem = ActorSystem("stream-sample-graph")
   implicit val materializer: Materializer = ActorMaterializer()
-  implicit val mpWrites: MessageFormat.type = MessageFormat
+  implicit val mpWrites: InfoMessageFormat.type = InfoMessageFormat
   implicit val ex:ExecutionContext = ExecutionContext.global
   val inTopic = "stream-in"
   val outTopic = "stream-out"

@@ -8,7 +8,7 @@ import akka.kafka.ProducerSettings
 import akka.kafka.scaladsl.Producer
 import akka.stream.scaladsl.Source
 import akka.stream.{ActorMaterializer, Materializer}
-import com.ts.processor.{Message, MessageFormat}
+import com.ts.processor.{InfoMessage, InfoMessageFormat}
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.ByteArraySerializer
 import play.api.libs.json.Json
@@ -19,7 +19,7 @@ import scala.util.{Failure, Random, Success}
 object SampleWriter extends App{
   implicit val system: ActorSystem = ActorSystem("sample-graph-writer")
   implicit val materializer = ActorMaterializer()
-  implicit val mpWrites = MessageFormat
+  implicit val mpWrites = InfoMessageFormat
   val rand = Random
   val topic  = "stream-in"
 
@@ -31,7 +31,7 @@ object SampleWriter extends App{
   }
 
   def genMessage(value: Int) = {
-    Json.toJson(Message(UUID.randomUUID().toString,s"some-data-$value",100,1000+value)).toString.getBytes
+    Json.toJson(InfoMessage(UUID.randomUUID().toString,s"some-data-$value",100,1000+value)).toString.getBytes
   }
 
   val done: Future[Done] =
